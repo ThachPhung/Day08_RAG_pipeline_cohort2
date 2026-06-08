@@ -1,5 +1,6 @@
 """
 Task 9 — Retrieval Pipeline Hoàn Chỉnh.
+<<<<<<< HEAD
 
 Kết hợp semantic search + lexical search + reranking + PageIndex fallback
 thành một pipeline thống nhất.
@@ -25,6 +26,18 @@ from .task8_pageindex_vectorless import pageindex_search
 SCORE_THRESHOLD = 0.3   # Nếu best score < threshold → fallback PageIndex
 DEFAULT_TOP_K = 5
 RERANK_METHOD = "cross_encoder"  # "cross_encoder" | "mmr" | "rrf"
+=======
+"""
+
+from src.task5_semantic_search import semantic_search
+from src.task6_lexical_search import lexical_search
+from src.task7_reranking import rerank, rerank_rrf
+from src.task8_pageindex_vectorless import pageindex_search
+
+SCORE_THRESHOLD = 0.3
+DEFAULT_TOP_K = 5
+RERANK_METHOD = "cross_encoder"
+>>>>>>> 430f14b37ec710a67f2c80cf504b3dc0cc3e1d80
 
 
 def retrieve(
@@ -34,6 +47,7 @@ def retrieve(
     use_reranking: bool = True,
 ) -> list[dict]:
     """
+<<<<<<< HEAD
     Retrieval pipeline hoàn chỉnh với fallback logic.
 
     Pipeline:
@@ -87,6 +101,39 @@ def retrieve(
     #
     # return final_results[:top_k]
     raise NotImplementedError("Implement retrieve")
+=======
+    Retrieval pipeline: hybrid search → rerank → PageIndex fallback.
+    """
+    fetch_k = max(top_k * 2, 10)
+
+    dense_results = semantic_search(query, top_k=fetch_k)
+    sparse_results = lexical_search(query, top_k=fetch_k)
+
+    if not dense_results and not sparse_results:
+        return pageindex_search(query, top_k=top_k)
+
+    merged = rerank_rrf([dense_results, sparse_results], top_k=fetch_k)
+    for item in merged:
+        item["source"] = "hybrid"
+
+    if use_reranking and merged:
+        final_results = rerank(query, merged, top_k=top_k, method=RERANK_METHOD)
+        for item in final_results:
+            item["source"] = "hybrid"
+    else:
+        final_results = merged[:top_k]
+
+    if not final_results:
+        return pageindex_search(query, top_k=top_k)
+
+    best_score = float(final_results[0].get("score", 0.0))
+    if best_score < score_threshold:
+        fallback = pageindex_search(query, top_k=top_k)
+        if fallback:
+            return fallback
+
+    return final_results[:top_k]
+>>>>>>> 430f14b37ec710a67f2c80cf504b3dc0cc3e1d80
 
 
 if __name__ == "__main__":

@@ -1,0 +1,110 @@
+# =============================================================================
+# Secrets & credentials — KHÔNG commit API keys
+# =============================================================================
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+*.pem
+*.key
+credentials.json
+secrets.json
+service-account*.json
+
+# =============================================================================
+# Python
+# =============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# =============================================================================
+# Testing & linting
+# =============================================================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# DeepEval / RAGAS eval artifacts
+.deepeval/
+.deepeval-cache/
+
+# =============================================================================
+# RAG pipeline — generated index (chạy lại: python3 -m src.task4_chunking_indexing)
+# =============================================================================
+data/index/
+data/chroma_db/
+data/faiss_index/
+*.pkl
+*.pickle
+
+# =============================================================================
+# Crawled / saved web page assets (CSS, JS, images khi Save Page As)
+# =============================================================================
+**/*_files/
+
+# =============================================================================
+# Jupyter
+# =============================================================================
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# =============================================================================
+# IDE & OS
+# =============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
+
+# VS Code — giữ settings nếu nhóm dùng chung, bỏ comment dòng dưới
+# .vscode/
+
+# =============================================================================
+# Logs & temp files
+# =============================================================================
+*.log
+logs/
+tmp/
+temp/
+.cache/
+
+# Hugging Face / model cache tải về trong project (nếu có)
+models/
+hf_cache/

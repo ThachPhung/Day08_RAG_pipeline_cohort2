@@ -1,17 +1,77 @@
 [
   {
-    "question": "Hình phạt cho tội tàng trữ trái phép chất ma tuý theo Điều 249 Bộ luật Hình sự?",
-    "expected_answer": "Phạt tù từ 1 đến 5 năm đối với trường hợp tàng trữ từ 1g đến dưới 5g heroin hoặc cocaine, hoặc chất ma tuý khác với khối lượng tương đương.",
-    "expected_context": "Bộ luật Hình sự 2015, Điều 249"
+    "question": "Luật Phòng, chống ma túy quy định phạm vi điều chỉnh gồm những nội dung nào?",
+    "expected_answer": "Luật quy định về phòng, chống ma túy; quản lý người sử dụng trái phép chất ma túy; cai nghiện ma túy; trách nhiệm của cá nhân, gia đình, cơ quan, tổ chức; quản lý nhà nước và hợp tác quốc tế về phòng, chống ma túy.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 1"
   },
   {
-    "question": "Luật Phòng chống ma tuý 2021 quy định những hình thức cai nghiện nào?",
-    "expected_answer": "Cai nghiện tự nguyện tại gia đình, cai nghiện tự nguyện tại cộng đồng, cai nghiện tự nguyện tại cơ sở cai nghiện, và cai nghiện bắt buộc tại cơ sở cai nghiện.",
-    "expected_context": "Luật Phòng chống ma tuý 2021, Chương V"
+    "question": "Chất ma túy được giải thích như thế nào trong Luật Phòng, chống ma túy?",
+    "expected_answer": "Chất ma túy là chất gây nghiện hoặc chất hướng thần được quy định trong danh mục chất ma túy do Chính phủ ban hành.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
   },
   {
-    "question": "Danh mục các chất ma tuý thuộc nhóm I theo quy định pháp luật Việt Nam gồm những chất nào?",
-    "expected_answer": "Nhóm I gồm các chất ma tuý tuyệt đối cấm sử dụng trong y học và đời sống, bao gồm heroin, cocaine, methamphetamine, MDMA (ecstasy), cannabis (cần sa), và các chất tương tự.",
-    "expected_context": "Nghị định 57/2022/NĐ-CP, Phụ lục I"
+    "question": "Tiền chất trong lĩnh vực ma túy là gì?",
+    "expected_answer": "Tiền chất là hóa chất không thể thiếu trong quá trình điều chế, sản xuất chất ma túy và thuộc danh mục tiền chất do Chính phủ ban hành.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Người sử dụng trái phép chất ma túy được hiểu là ai?",
+    "expected_answer": "Đó là người có hành vi sử dụng chất ma túy không được cơ quan hoặc người có thẩm quyền cho phép và có kết quả xét nghiệm dương tính với chất ma túy.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Xét nghiệm chất ma túy trong cơ thể được thực hiện qua những loại mẫu nào?",
+    "expected_answer": "Việc xét nghiệm có thể thực hiện qua mẫu nước tiểu, mẫu máu hoặc các mẫu vật khác của cơ thể người.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Tệ nạn ma túy được định nghĩa ra sao?",
+    "expected_answer": "Tệ nạn ma túy là việc sử dụng trái phép chất ma túy, nghiện ma túy và các hành vi vi phạm pháp luật về ma túy chưa đến mức hoặc không bị truy cứu trách nhiệm hình sự.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Cây có chứa chất ma túy gồm những loại cây nào theo luật?",
+    "expected_answer": "Cây có chứa chất ma túy gồm cây thuốc phiện, cây côca, cây cần sa và các loại cây khác có chứa chất ma túy do Chính phủ quy định.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Kiểm soát hoạt động hợp pháp liên quan đến ma túy nhằm mục đích gì?",
+    "expected_answer": "Kiểm soát là việc cho phép, theo dõi, kiểm tra, giám sát các hoạt động hợp pháp liên quan đến ma túy và phòng ngừa việc lợi dụng các hoạt động đó vào mục đích khác.",
+    "expected_context": "Luật Phòng, chống ma túy 2021, Điều 2"
+  },
+  {
+    "question": "Các tài liệu chuẩn hóa trong nhóm có bao gồm dữ liệu pháp luật và tin tức không?",
+    "expected_answer": "Có. Kho dữ liệu chuẩn hóa có thư mục legal cho văn bản pháp luật và news cho các bài báo liên quan.",
+    "expected_context": "data/standardized/legal và data/standardized/news"
+  },
+  {
+    "question": "Bài báo VTV về Long Nhật và Sơn Ngọc Minh thuộc chủ đề gì?",
+    "expected_answer": "Bài báo nói về ca sĩ Long Nhật và Sơn Ngọc Minh bị bắt trong một chuyên án ma túy.",
+    "expected_context": "ca-si-long-nhat-son-ngoc-minh-bi-bat-trong-chuyen-an-ma-tuy.md"
+  },
+  {
+    "question": "Có bài báo nào nhắc tới ca sĩ Chi Dân liên quan đến ma túy không?",
+    "expected_answer": "Có, dữ liệu tin tức có bài về ca sĩ Chi Dân bị điều tra nghi liên quan đến ma túy.",
+    "expected_context": "ca-si-chi-dan-bi-đieu-tra-nghi-lien-quan-đen-ma-tuy"
+  },
+  {
+    "question": "Có bài báo nào nhắc tới ca sĩ Miu Lê và cáo buộc tổ chức sử dụng ma túy không?",
+    "expected_answer": "Có, dữ liệu tin tức có bài về ca sĩ Miu Lê bị bắt với cáo buộc tổ chức sử dụng ma túy.",
+    "expected_context": "ca-si-miu-le-bi-bat-voi-cao-buoc-to-chuc-su-dung-ma-tuy"
+  },
+  {
+    "question": "Pipeline nhóm dùng các bước retrieval nào trước khi fallback?",
+    "expected_answer": "Pipeline chạy semantic search và lexical search, sau đó merge bằng RRF và rerank trước khi xét fallback.",
+    "expected_context": "Task 9 retrieval pipeline"
+  },
+  {
+    "question": "Khi nào pipeline dùng PageIndex hoặc fallback vectorless?",
+    "expected_answer": "Pipeline dùng PageIndex hoặc fallback vectorless khi hybrid search không có kết quả hoặc điểm kết quả tốt nhất thấp hơn ngưỡng.",
+    "expected_context": "Task 8 PageIndex vectorless và Task 9 fallback"
+  },
+  {
+    "question": "Vì sao nhóm dùng BM25 trong lexical search?",
+    "expected_answer": "BM25 giúp tìm kiếm theo từ khóa chính xác, bổ sung cho semantic search khi câu hỏi có điều luật, tên người hoặc cụm từ pháp lý cụ thể.",
+    "expected_context": "Task 6 lexical search"
   }
 ]

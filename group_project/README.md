@@ -171,7 +171,14 @@ run_dashboard()
 ## Kiến Trúc Hệ Thống
 
 ```
-[Vẽ diagram kiến trúc ở đây]
+data/standardized/*.md
+  -> Task 4: chunking + embedding + local index (group_project/index)
+  -> Task 5: semantic search
+  -> Task 6: BM25 lexical search
+  -> Task 7: RRF merge + reranking
+  -> Task 8: PageIndex API hoặc local vectorless fallback
+  -> Task 9: retrieval pipeline thống nhất
+  -> evaluation/eval_pipeline.py: A/B evaluation + results.md
 ```
 
 ---
@@ -193,10 +200,19 @@ run_dashboard()
 # Cài đặt dependencies
 pip install -r requirements.txt
 
-# Chạy app
-streamlit run app.py
-# hoặc
-chainlit run app.py
+# Build index cho phần group
+python -m group_project.src.task4_chunking_indexing
+
+# Test retrieval pipeline
+python -m group_project.src.task9_retrieval_pipeline
+
+# Chạy evaluation A/B và xuất results.md
+python group_project/evaluation/eval_pipeline.py
+
+# Tuỳ chọn: dùng SentenceTransformer thật thay vì hashing embedding offline
+# PowerShell:
+$env:GROUP_RAG_USE_SENTENCE_TRANSFORMERS="1"
+python -m group_project.src.task4_chunking_indexing
 ```
 
 ---
