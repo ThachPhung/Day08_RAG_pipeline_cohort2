@@ -1,3 +1,4 @@
+[
     {
         "question": "Hình phạt cho tội tàng trữ trái phép chất ma tuý theo Điều 249 Bộ luật Hình sự?",
         "expected_answer": "Theo Điều 249 Bộ luật Hình sự 2015 sửa đổi, bổ sung 2017, người tàng trữ trái phép chất ma túy có thể bị phạt tù từ 1 năm đến 5 năm ở khung cơ bản nếu thuộc các trường hợp luật định như tàng trữ heroin, cocaine, methamphetamine, amphetamine, MDMA từ 0,1 gam đến dưới 5 gam.",
@@ -253,3 +254,4 @@
         "expected_answer": "Không. Chatbot không nên đưa ra kết luận pháp lý cuối cùng nếu chỉ có thông tin từ bài báo. Chatbot cần nêu rõ nguồn tin, trạng thái thông tin và nói không thể xác minh nếu thiếu kết luận chính thức từ cơ quan có thẩm quyền.",
         "expected_context": "Tin tức đã crawl; nguyên tắc trả lời có citation trong Task 10"
     }
+]

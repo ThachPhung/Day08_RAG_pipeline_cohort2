@@ -65,6 +65,7 @@ htmlcov/
 # RAG pipeline — generated index (chạy lại: python3 -m src.task4_chunking_indexing)
 # =============================================================================
 data/index/
+group_project/index/
 data/chroma_db/
 data/faiss_index/
 *.pkl
