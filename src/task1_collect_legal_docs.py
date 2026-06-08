@@ -1,47 +1,45 @@
 """
-Task 1 — Thu thập văn bản pháp luật về ma tuý và các chất cấm.
+Task 1 - Thu thap van ban phap luat ve ma tuy va cac chat cam.
 
-Hướng dẫn:
-    1. Tìm tối thiểu 3 văn bản pháp luật (PDF/DOCX) từ các nguồn chính thống.
-    2. Tải về và lưu vào data/landing/legal/
-    3. Đặt tên file rõ ràng, không dấu, có năm ban hành.
-
-Gợi ý nguồn:
-    - https://thuvienphapluat.vn
-    - https://vanban.chinhphu.vn
-    - https://luatvietnam.vn
-
-Gợi ý văn bản:
-    - Luật Phòng, chống ma tuý 2021 (73/2021/QH15)
-    - Nghị định 105/2021/NĐ-CP
-    - Bộ luật Hình sự 2015 (sửa đổi 2017) - Chương XX
-    - Nghị định 57/2022/NĐ-CP về danh mục chất ma tuý
+Chon 3 van ban:
+    1. Luat Phong, chong ma tuy 2021.
+    2. Nghi dinh 105/2021/ND-CP.
+    3. Nghi dinh 57/2022/ND-CP ve danh muc chat ma tuy va tien chat.
 """
 
 from pathlib import Path
+from urllib.request import Request, urlopen
 
 DATA_DIR = Path(__file__).parent.parent / "data" / "landing" / "legal"
 
+LEGAL_DOCS = {
+    "luat-phong-chong-ma-tuy-2021.pdf": "https://congan.sonla.gov.vn/wp-content/uploads/2022/05/1.-Luat-PCMT-2021.pdf",
+    "nghi-dinh-105-2021.pdf": "https://congbao.cdnchinhphu.vn/CongBaoCP/VanBan/2021/12/34944/37821-1-20211047-1048105-2021-nd-cp.pdf",
+    "nghi-dinh-57-2022.pdf": "https://congbaocdn.chinhphu.vn/CongBaoCP/VanBan/2022/8/37734/41623-1-2022709-71057-2022-nd-cp.pdf",
+}
 
-def setup_directory():
-    """Tạo thư mục data/landing/legal/ nếu chưa có."""
+
+def setup_directory() -> None:
+    """Create data/landing/legal/ if it does not exist."""
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    print(f"✓ Thư mục đã sẵn sàng: {DATA_DIR}")
+    print(f"Legal landing directory ready: {DATA_DIR}")
 
 
-# TODO: Tải file PDF/DOCX về DATA_DIR
-# Có thể tải thủ công hoặc viết script download nếu có direct link.
-#
-# Ví dụ nếu có direct link:
-#
-# import requests
-#
-# def download_file(url: str, filename: str):
-#     response = requests.get(url)
-#     filepath = DATA_DIR / filename
-#     filepath.write_bytes(response.content)
-#     print(f"✓ Đã tải: {filepath}")
+def download_file(url: str, filename: str) -> Path:
+    """Download one legal document into data/landing/legal/."""
+    setup_directory()
+    filepath = DATA_DIR / filename
+    request = Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urlopen(request, timeout=30) as response:
+        filepath.write_bytes(response.read())
+    print(f"Downloaded: {filepath}")
+    return filepath
+
+
+def download_all() -> list[Path]:
+    """Download all selected legal documents for Task 1."""
+    return [download_file(url, filename) for filename, url in LEGAL_DOCS.items()]
 
 
 if __name__ == "__main__":
-    setup_directory()
+    download_all()

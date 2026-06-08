@@ -1,181 +1,66 @@
 """
-Task 4 — Chunking & Indexing vào Vector Store.
+Task 4 - Chunking & indexing.
 
-Hướng dẫn:
-    1. Đọc toàn bộ markdown files từ data/standardized/
-    2. Chọn 1 chunking strategy (giải thích lý do)
-    3. Chọn 1 embedding model (giải thích lý do)
-    4. Index vào vector store (Weaviate khuyến cáo)
-
-Chunking options (langchain-text-splitters):
-    - RecursiveCharacterTextSplitter: an toàn, phổ biến
-    - MarkdownHeaderTextSplitter: tốt cho file có heading
-    - SemanticChunker: dùng embedding để tách (nâng cao)
-
-Embedding model options:
-    - sentence-transformers/all-MiniLM-L6-v2 (384 dim, nhẹ)
-    - BAAI/bge-m3 (1024 dim, multilingual, tốt cho tiếng Việt)
-    - OpenAI text-embedding-3-small (1536 dim, API)
-
-Vector store options:
-    - Weaviate (khuyến cáo: hỗ trợ hybrid search built-in)
-    - ChromaDB (đơn giản, local)
-    - FAISS (chỉ dense search)
-
-Cài đặt:
-    pip install langchain-text-splitters sentence-transformers weaviate-client
+Implementation choice:
+- Chunking: recursive character splitting with paragraph/sentence boundaries.
+- Embedding: lightweight hashed token embedding for offline classroom tests.
+- Vector store: in-memory list, exposed through helper functions.
 """
 
 from pathlib import Path
 
+try:
+    from .local_rag_utils import chunk_documents as _chunk_documents
+    from .local_rag_utils import load_markdown_documents, simple_embedding
+except ImportError:
+    from local_rag_utils import chunk_documents as _chunk_documents
+    from local_rag_utils import load_markdown_documents, simple_embedding
+
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
 
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 50
+CHUNKING_METHOD = "recursive"
 
-# =============================================================================
-# CONFIGURATION — Giải thích lựa chọn của bạn trong comment
-# =============================================================================
+EMBEDDING_MODEL = "local-hashed-token-embedding"
+EMBEDDING_DIM = 128
+VECTOR_STORE = "in_memory"
 
-# TODO: Chọn chunking strategy và giải thích vì sao
-CHUNK_SIZE = 500        # Vì sao chọn 500? ...
-CHUNK_OVERLAP = 50      # Vì sao chọn 50? ...
-CHUNKING_METHOD = "recursive"  # "recursive" | "markdown_header" | "semantic"
+VECTOR_INDEX: list[dict] = []
 
-# TODO: Chọn embedding model và giải thích
-EMBEDDING_MODEL = "BAAI/bge-m3"  # Vì sao? Multilingual, tốt cho tiếng Việt
-EMBEDDING_DIM = 1024
-
-# TODO: Chọn vector store
-VECTOR_STORE = "weaviate"  # "weaviate" | "chromadb" | "faiss"
-
-
-# =============================================================================
-# IMPLEMENTATION
-# =============================================================================
 
 def load_documents() -> list[dict]:
-    """
-    Đọc toàn bộ markdown files từ data/standardized/.
-
-    Returns:
-        List of {'content': str, 'metadata': {'source': str, 'type': str}}
-    """
-    # TODO: Iterate qua STANDARDIZED_DIR, đọc .md files
-    # documents = []
-    # for md_file in STANDARDIZED_DIR.rglob("*.md"):
-    #     content = md_file.read_text(encoding="utf-8")
-    #     doc_type = "legal" if "legal" in str(md_file) else "news"
-    #     documents.append({
-    #         "content": content,
-    #         "metadata": {"source": md_file.name, "type": doc_type}
-    #     })
-    # return documents
-    raise NotImplementedError("Implement load_documents")
+    """Read all markdown files from data/standardized/."""
+    return load_markdown_documents()
 
 
 def chunk_documents(documents: list[dict]) -> list[dict]:
-    """
-    Chunk documents theo strategy đã chọn.
-
-    Returns:
-        List of {'content': str, 'metadata': dict} — mỗi item là 1 chunk
-    """
-    # TODO: Implement chunking
-    #
-    # Ví dụ với RecursiveCharacterTextSplitter:
-    # from langchain_text_splitters import RecursiveCharacterTextSplitter
-    #
-    # splitter = RecursiveCharacterTextSplitter(
-    #     chunk_size=CHUNK_SIZE,
-    #     chunk_overlap=CHUNK_OVERLAP,
-    #     separators=["\n\n", "\n", ". ", " ", ""]
-    # )
-    # chunks = []
-    # for doc in documents:
-    #     splits = splitter.split_text(doc["content"])
-    #     for i, chunk_text in enumerate(splits):
-    #         chunks.append({
-    #             "content": chunk_text,
-    #             "metadata": {**doc["metadata"], "chunk_index": i}
-    #         })
-    # return chunks
-    raise NotImplementedError("Implement chunk_documents")
+    """Split documents into bounded chunks."""
+    return _chunk_documents(documents, chunk_size=CHUNK_SIZE, overlap=CHUNK_OVERLAP)
 
 
 def embed_chunks(chunks: list[dict]) -> list[dict]:
-    """
-    Embed toàn bộ chunks bằng model đã chọn.
-
-    Returns:
-        Mỗi chunk dict được thêm key 'embedding': list[float]
-    """
-    # TODO: Implement embedding
-    #
-    # Ví dụ với sentence-transformers:
-    # from sentence_transformers import SentenceTransformer
-    #
-    # model = SentenceTransformer(EMBEDDING_MODEL)
-    # texts = [c["content"] for c in chunks]
-    # embeddings = model.encode(texts, show_progress_bar=True)
-    # for chunk, emb in zip(chunks, embeddings):
-    #     chunk["embedding"] = emb.tolist()
-    # return chunks
-    raise NotImplementedError("Implement embed_chunks")
+    """Attach local embeddings to each chunk."""
+    embedded = []
+    for chunk in chunks:
+        embedded.append({**chunk, "embedding": simple_embedding(chunk["content"], dim=EMBEDDING_DIM)})
+    return embedded
 
 
-def index_to_vectorstore(chunks: list[dict]):
-    """
-    Lưu chunks vào vector store đã chọn.
-    """
-    # TODO: Implement indexing
-    #
-    # Ví dụ với Weaviate:
-    # import weaviate
-    # from weaviate.classes.config import Configure, Property, DataType
-    #
-    # client = weaviate.connect_to_local()  # hoặc connect_to_weaviate_cloud()
-    #
-    # # Tạo collection
-    # collection = client.collections.create(
-    #     name="DrugLawDocs",
-    #     vectorizer_config=Configure.Vectorizer.none(),
-    #     properties=[
-    #         Property(name="content", data_type=DataType.TEXT),
-    #         Property(name="source", data_type=DataType.TEXT),
-    #         Property(name="doc_type", data_type=DataType.TEXT),
-    #     ]
-    # )
-    #
-    # # Insert chunks
-    # with collection.batch.dynamic() as batch:
-    #     for chunk in chunks:
-    #         batch.add_object(
-    #             properties={"content": chunk["content"], ...},
-    #             vector=chunk["embedding"]
-    #         )
-    raise NotImplementedError("Implement index_to_vectorstore")
+def index_to_vectorstore(chunks: list[dict]) -> list[dict]:
+    """Store chunks in an in-memory vector index."""
+    VECTOR_INDEX.clear()
+    VECTOR_INDEX.extend(chunks)
+    return VECTOR_INDEX
 
 
-def run_pipeline():
-    """Chạy toàn bộ pipeline: load → chunk → embed → index."""
-    print("=" * 50)
-    print("Task 4: Chunking & Indexing")
-    print(f"  Chunking: {CHUNKING_METHOD} (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})")
-    print(f"  Embedding: {EMBEDDING_MODEL} (dim={EMBEDDING_DIM})")
-    print(f"  Vector Store: {VECTOR_STORE}")
-    print("=" * 50)
-
+def run_pipeline() -> list[dict]:
     docs = load_documents()
-    print(f"\n✓ Loaded {len(docs)} documents")
-
     chunks = chunk_documents(docs)
-    print(f"✓ Created {len(chunks)} chunks")
-
-    chunks = embed_chunks(chunks)
-    print(f"✓ Embedded {len(chunks)} chunks")
-
-    index_to_vectorstore(chunks)
-    print("✓ Indexed to vector store")
+    embedded = embed_chunks(chunks)
+    return index_to_vectorstore(embedded)
 
 
 if __name__ == "__main__":
-    run_pipeline()
+    index = run_pipeline()
+    print(f"Indexed {len(index)} chunks")
