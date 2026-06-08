@@ -1,0 +1,28 @@
+# Miu Lê xin lỗi khán giả
+
+**Nguồn:** https://vnexpress.net/miu-le-xin-loi-khan-gia-5074078.html
+**Ngày crawl:** 2026-06-08T15:02:22
+
+---
+
+**Thông qua người đại diện, Miu Lê cho biết "vô cùng xấu hổ và ân hận", nhận thức rõ hành vi sử dụng ma túy là sai trái, sẽ nộp phạt, chịu quản lý của địa phương.**
+
+Thông qua người đại diện, Miu Lê cho biết "vô cùng xấu hổ và ân hận", nhận thức rõ hành vi sử dụng ma túy là sai trái, sẽ nộp phạt, chịu quản lý của địa phương.
+
+Tối 14/5, ca sĩ đưa ra lời xin lỗi ngay sau khi nhà chức trách thông báo cho rằng cô chưa bị khởi tố do "chưa đủ căn cứ để xử lý hình sự", và là "đối tượng thụ hưởng" trong vụ án tàng trữ, sử dụng trái phép chất ma túy trên đảo Cát Bà, Hải Phòng.
+
+Trong thông cáo báo chí, ca sĩ Miu Lê gửi lời xin lỗi vì đã phụ lòng tin tưởng, yêu mến của mọi người. "Việc liên quan đến sử dụng chất cấm là một sai lầm rất lớn, đi ngược lại với chuẩn mực đạo đức, lối sống của một nghệ sĩ và gây ra những tác động vô cùng tiêu cực. Miu Lê ý thức rất rõ hành vi của mình đã ảnh hưởng xấu đến cộng đồng, trở thành một tấm gương không tốt, đặc biệt là đối với các bạn trẻ. Miu Lê vô cùng xấu hổ và ân hận vì điều đó", thông cáo nêu.
+
+Bà Đỗ Hoàng Vũ - đại diện công ty quản lý của Miu Lê - cho biết ca sĩ sẽ chịu xử phạt vi phạm hành chính đối với hành vi sử dụng trái phép chất ma túy, đồng thời nghiêm túc chấp hành biện pháp quản lý tại địa phương trong thời hạn một năm.
+
+"Thay mặt Miu Lê, chúng tôi xin cúi đầu gửi lời xin lỗi chân thành và sâu sắc nhất đến khán giả. Chúng tôi cam kết tiếp tục phối hợp tuyệt đối và tuân thủ nghiêm ngặt mọi quy định pháp luật trong các giai đoạn tiếp theo", người đại diện ca sĩ nói thêm.
+
+Miu Lê trong ảnh chụp năm 2023, thời cô để da trắng. Về sau, cô cho biết nhuộm da nâu, theo phong cách tự nhiên. Ảnh: Êkíp ca sĩ cung cấp
+
+Trong sáu người bị bắt quả tang cùng Miu Lê hôm 10/5, cơ quan Cảnh sát điều tra Công an thành phố Hải Phòng đã khởi tố bị can, bắt tạm giam với ba người, gồm Trần Đức Phong (35 tuổi, ở phường Ngọc Hà, TP Hà Nội) và Vũ Thái Nam (24 tuổi, ở phường Đồng Nguyên, tỉnh Bắc Ninh) về tội Tổ chức sử dụng trái phép chất ma túy và Tàng trữ trái phép chất ma túy ; Đoàn Thị Thúy An (36 tuổi, ở đặc khu Cát Bà, TP Hải Phòng) về tội Tổ chức sử dụng trái phép chất ma túy . Miu Lê và hai người khác là Trần Minh Trang, Vũ Khương An chưa bị truy cứu trách nhiệm hình sự.
+
+Tuy nhiên, cơ quan điều tra tiếp tục đấu tranh, nếu đủ căn cứ sẽ xử lý theo quy định. Vụ án đang được khẩn trương điều tra.
+
+Miu Lê, 35 tuổi, tên thật là Lê Ánh Nhật, quê Ninh Thuận cũ, sống tại TP HCM. Cô có 20 năm hoạt động showbiz trong nhiều vai trò diễn viên, ca sĩ. Năm 2009, cô bắt đầu sự nghiệp diễn xuất với phim Những thiên thần áo trắng, sau đó ghi dấu ấn qua các dự án khác như Em là bà nội của anh , Bạn gái tôi là sếp , Anh thầy ngôi sao.
+
+Ngoài đóng phim, cô còn là ca sĩ, nổi tiếng với bản hit Giá như cô ấy chưa xuất hiện , Thầm thương trộm nhớ , Vì mẹ anh bắt chia tay . Năm 2025, cô thi Em xinh say hi, vào đến chung kết.

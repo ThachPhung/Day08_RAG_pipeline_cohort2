@@ -70,6 +70,13 @@ data/faiss_index/
 *.pkl
 *.pickle
 
+# Conversation memory — chat history DB (group_project/src/conversation_memory.py)
+data/chat_history.db
+data/*.db
+data/*.db-wal
+data/*.db-shm
+data/sessions/
+
 # =============================================================================
 # Crawled / saved web page assets (CSS, JS, images khi Save Page As)
 # =============================================================================
