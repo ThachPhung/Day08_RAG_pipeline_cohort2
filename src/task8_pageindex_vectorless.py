@@ -31,22 +31,21 @@ def upload_documents():
     """
     Upload toàn bộ markdown documents lên PageIndex.
     """
-    # TODO: Implement upload
-    #
-    # Tham khảo: https://github.com/VectifyAI/PageIndex
-    #
-    # from pageindex import PageIndex
-    #
-    # pi = PageIndex(api_key=PAGEINDEX_API_KEY)
-    #
-    # for md_file in STANDARDIZED_DIR.rglob("*.md"):
-    #     content = md_file.read_text(encoding="utf-8")
-    #     pi.upload(
-    #         content=content,
-    #         metadata={"filename": md_file.name, "type": md_file.parent.name}
-    #     )
-    #     print(f"  ✓ Uploaded: {md_file.name}")
-    raise NotImplementedError("Implement upload_documents")
+    if not PAGEINDEX_API_KEY:
+        raise NotImplementedError("PAGEINDEX_API_KEY is not configured in .env")
+
+    from pageindex import PageIndex
+
+    pi = PageIndex(api_key=PAGEINDEX_API_KEY)
+
+    for md_file in STANDARDIZED_DIR.rglob("*.md"):
+        if md_file.is_file():
+            content = md_file.read_text(encoding="utf-8")
+            pi.upload(
+                content=content,
+                metadata={"filename": md_file.name, "type": md_file.parent.name}
+            )
+            print(f"  ✓ Uploaded: {md_file.name}")
 
 
 def pageindex_search(query: str, top_k: int = 5) -> list[dict]:
@@ -66,23 +65,23 @@ def pageindex_search(query: str, top_k: int = 5) -> list[dict]:
             'source': 'pageindex'   # Đánh dấu nguồn retrieval
         }
     """
-    # TODO: Implement PageIndex query
-    #
-    # from pageindex import PageIndex
-    #
-    # pi = PageIndex(api_key=PAGEINDEX_API_KEY)
-    # results = pi.query(query=query, top_k=top_k)
-    #
-    # return [
-    #     {
-    #         "content": r.text,
-    #         "score": r.score,
-    #         "metadata": r.metadata,
-    #         "source": "pageindex"
-    #     }
-    #     for r in results
-    # ]
-    raise NotImplementedError("Implement pageindex_search")
+    if not PAGEINDEX_API_KEY:
+        raise NotImplementedError("PAGEINDEX_API_KEY is not configured in .env")
+
+    from pageindex import PageIndex
+
+    pi = PageIndex(api_key=PAGEINDEX_API_KEY)
+    results = pi.query(query=query, top_k=top_k)
+
+    return [
+        {
+            "content": r.text,
+            "score": r.score,
+            "metadata": r.metadata,
+            "source": "pageindex"
+        }
+        for r in results
+    ]
 
 
 if __name__ == "__main__":
@@ -91,9 +90,16 @@ if __name__ == "__main__":
         print("  Đăng ký tại: https://pageindex.ai/")
     else:
         print("Uploading documents...")
-        upload_documents()
+        try:
+            upload_documents()
+        except Exception as e:
+            print(f"Error uploading: {e}")
 
         print("\nTest query:")
-        results = pageindex_search("hình phạt sử dụng ma tuý", top_k=3)
-        for r in results:
-            print(f"[{r['score']:.3f}] {r['content'][:100]}...")
+        try:
+            results = pageindex_search("hình phạt sử dụng ma tuý", top_k=3)
+            for r in results:
+                print(f"[{r['score']:.3f}] {r['content'][:100]}...")
+        except Exception as e:
+            print(f"Error searching: {e}")
+

@@ -61,32 +61,41 @@ def retrieve(
             'source': str  # 'hybrid' hoặc 'pageindex'
         }
     """
-    # TODO: Implement full retrieval pipeline
-    #
-    # Step 1: Song song chạy semantic + lexical
-    # dense_results = semantic_search(query, top_k=top_k * 2)
-    # sparse_results = lexical_search(query, top_k=top_k * 2)
-    #
-    # Step 2: Merge bằng RRF
-    # merged = rerank_rrf([dense_results, sparse_results], top_k=top_k * 2)
-    # for item in merged:
-    #     item["source"] = "hybrid"
-    #
+    # Step 1: Chạy semantic + lexical search
+    dense_results = semantic_search(query, top_k=top_k * 2)
+    sparse_results = lexical_search(query, top_k=top_k * 2)
+
+    # Step 2: Merge bằng RRF (Reciprocal Rank Fusion)
+    merged = rerank_rrf([dense_results, sparse_results], top_k=top_k * 2)
+    for item in merged:
+        item["source"] = "hybrid"
+
     # Step 3: Rerank
-    # if use_reranking and merged:
-    #     final_results = rerank(query, merged, top_k=top_k, method=RERANK_METHOD)
-    # else:
-    #     final_results = merged[:top_k]
-    #
-    # Step 4: Check threshold → fallback
-    # if not final_results or final_results[0]["score"] < score_threshold:
-    #     print(f"  ⚠ Hybrid score ({final_results[0]['score']:.3f} if final_results else 0}) "
-    #           f"< threshold ({score_threshold}). Fallback → PageIndex")
-    #     fallback = pageindex_search(query, top_k=top_k)
-    #     return fallback
-    #
-    # return final_results[:top_k]
-    raise NotImplementedError("Implement retrieve")
+    if use_reranking and merged:
+        try:
+            final_results = rerank(query, merged, top_k=top_k, method=RERANK_METHOD)
+        except Exception as e:
+            print(f"  ⚠ Rerank error ({e}). Using raw RRF merged results.")
+            final_results = merged[:top_k]
+    else:
+        final_results = merged[:top_k]
+
+    # Ensure all elements have source = 'hybrid' (since rerank keeps items from candidates)
+    for item in final_results:
+        item["source"] = "hybrid"
+
+    # Step 4: Check threshold → fallback PageIndex
+    best_score = final_results[0]["score"] if final_results else 0.0
+    if not final_results or best_score < score_threshold:
+        print(f"  ⚠ Hybrid score ({best_score:.3f}) < threshold ({score_threshold}). Fallback → PageIndex")
+        try:
+            fallback = pageindex_search(query, top_k=top_k)
+            if fallback:
+                return fallback
+        except Exception as e:
+            print(f"  ⚠ PageIndex fallback failed or skipped ({e}). Returning hybrid results.")
+            
+    return final_results[:top_k]
 
 
 if __name__ == "__main__":
@@ -102,3 +111,4 @@ if __name__ == "__main__":
         results = retrieve(q, top_k=3)
         for i, r in enumerate(results, 1):
             print(f"  {i}. [{r['score']:.3f}] [{r['source']}] {r['content'][:80]}...")
+
