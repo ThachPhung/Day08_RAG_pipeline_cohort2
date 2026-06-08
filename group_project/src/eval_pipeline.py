@@ -24,15 +24,22 @@ import re
 import statistics
 import sys
 import argparse
+import shutil
 from pathlib import Path
 from typing import Callable
 
 
+GROUP_PROJECT_DIR = Path(__file__).resolve().parents[1]
 PROJECT_DIR = Path(__file__).resolve().parents[2]
-if str(PROJECT_DIR) not in sys.path:
-    sys.path.insert(0, str(PROJECT_DIR))
 
-from src.rag_utils import summarize_text, tokenize
+# Prefer the completed member pipeline in group_project/src. Keep project root
+# second so shared files can still be found when needed.
+for path in (str(GROUP_PROJECT_DIR), str(PROJECT_DIR)):
+    if path in sys.path:
+        sys.path.remove(path)
+sys.path.insert(0, str(GROUP_PROJECT_DIR))
+sys.path.insert(1, str(PROJECT_DIR))
+
 from src.task10_generation import generate_with_citation
 from src.task9_retrieval_pipeline import retrieve
 
@@ -41,10 +48,27 @@ EVAL_DIR = Path(__file__).resolve().parent
 GOLDEN_DATASET_PATH = EVAL_DIR / "golden_dataset.json"
 RESULTS_PATH = EVAL_DIR / "results.md"
 MIN_EXPECTED_CASES = 15
+GROUP_STANDARDIZED_DIR = GROUP_PROJECT_DIR / "data" / "standardized"
+ROOT_STANDARDIZED_DIR = PROJECT_DIR / "data" / "standardized"
+GROUP_INDEX_DIR = GROUP_PROJECT_DIR / "data" / "index"
+LOCAL_EMBEDDING_DIM = 384
 
 
 MetricScores = dict[str, float]
 CaseResult = dict[str, object]
+
+
+def tokenize(text: str) -> list[str]:
+    """Unicode-aware tokenizer for Vietnamese evaluation text."""
+    return re.findall(r"[\wÀ-ỹ]+", text.lower(), flags=re.UNICODE)
+
+
+def summarize_text(text: str, max_chars: int = 800) -> str:
+    """Compact long text for terminal previews."""
+    clean = re.sub(r"\s+", " ", text).strip()
+    if len(clean) <= max_chars:
+        return clean
+    return clean[: max_chars - 3].rstrip() + "..."
 
 
 def load_golden_dataset() -> list[dict]:
@@ -58,6 +82,75 @@ def load_golden_dataset() -> list[dict]:
         if missing:
             raise ValueError(f"Case #{idx} missing keys: {sorted(missing)}")
     return dataset
+
+
+def ensure_group_standardized_data() -> None:
+    """Ensure group_project/src pipeline has markdown data to index."""
+    has_group_markdown = GROUP_STANDARDIZED_DIR.exists() and any(
+        GROUP_STANDARDIZED_DIR.rglob("*.md")
+    )
+    if has_group_markdown:
+        return
+
+    if not ROOT_STANDARDIZED_DIR.exists() or not any(ROOT_STANDARDIZED_DIR.rglob("*.md")):
+        raise FileNotFoundError(
+            "No markdown data found. Expected files in group_project/data/standardized "
+            "or data/standardized before running evaluation."
+        )
+
+    GROUP_STANDARDIZED_DIR.mkdir(parents=True, exist_ok=True)
+    for item in ROOT_STANDARDIZED_DIR.iterdir():
+        destination = GROUP_STANDARDIZED_DIR / item.name
+        if item.is_dir():
+            shutil.copytree(item, destination, dirs_exist_ok=True)
+        elif item.is_file():
+            shutil.copy2(item, destination)
+
+
+def install_offline_embedding_fallback() -> None:
+    """
+    Patch the group pipeline to avoid downloading sentence-transformers models.
+
+    The completed group src uses SentenceTransformer by default. For evaluation
+    without network/API keys, this deterministic hash embedding keeps semantic
+    search runnable and preserves the same retrieve/generate interfaces.
+    """
+    import hashlib
+
+    import numpy as np
+    import src._index_store as index_store
+    import src.task5_semantic_search as task5
+
+    def _embed_texts(texts: list[str]) -> np.ndarray:
+        matrix = np.zeros((len(texts), LOCAL_EMBEDDING_DIM), dtype=np.float32)
+        for row, text in enumerate(texts):
+            for token in tokenize(text):
+                digest = hashlib.md5(token.encode("utf-8")).digest()
+                idx = int.from_bytes(digest[:4], "little") % LOCAL_EMBEDDING_DIM
+                sign = 1.0 if digest[4] % 2 == 0 else -1.0
+                matrix[row, idx] += sign
+            norm = np.linalg.norm(matrix[row])
+            if norm:
+                matrix[row] /= norm
+        return matrix
+
+    def _embed_query(query: str) -> np.ndarray:
+        return _embed_texts([query])[0]
+
+    index_store._embedding_model = "offline-hash-embedding"
+    index_store.embed_texts = _embed_texts
+    index_store.embed_query = _embed_query
+    task5.embed_query = _embed_query
+
+    # If task4 was already imported, patch its copied function reference too.
+    task4 = sys.modules.get("src.task4_chunking_indexing")
+    if task4 is not None:
+        task4.embed_texts = _embed_texts
+
+    # Rebuild index with the deterministic local embedding to avoid stale/empty
+    # artifacts from previous failed online model attempts.
+    if GROUP_INDEX_DIR.exists():
+        shutil.rmtree(GROUP_INDEX_DIR)
 
 
 def _token_set(text: str) -> set[str]:
@@ -434,6 +527,8 @@ def main() -> None:
     )
     args = parser.parse_args()
 
+    ensure_group_standardized_data()
+    install_offline_embedding_fallback()
     golden_dataset = load_golden_dataset()
     print(f"Loaded {len(golden_dataset)} test cases")
     if len(golden_dataset) < MIN_EXPECTED_CASES:

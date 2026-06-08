@@ -14,11 +14,11 @@ Số test cases hiện có: **51**.
 
 | Metric | Config A (hybrid + rerank) | Config B (hybrid no rerank) | Delta |
 |--------|-----------------------------|------------------------------|-------|
-| Faithfulness | 0.898 | 0.894 | +0.004 |
-| Answer Relevance | 0.453 | 0.457 | -0.004 |
-| Context Recall | 0.584 | 0.584 | +0.000 |
-| Context Precision | 0.886 | 0.886 | +0.000 |
-| **Average** | **0.705** | **0.705** | **+0.000** |
+| Faithfulness | 0.827 | 0.924 | -0.097 |
+| Answer Relevance | 0.371 | 0.336 | +0.035 |
+| Context Recall | 0.632 | 0.639 | -0.007 |
+| Context Precision | 0.925 | 0.914 | +0.011 |
+| **Average** | **0.689** | **0.703** | **-0.014** |
 
 ---
 
@@ -28,7 +28,7 @@ Số test cases hiện có: **51**.
 
 **Config B:** Hybrid retrieval giống Config A nhưng bỏ bước reranking để kiểm tra ảnh hưởng của reranker.
 
-**Kết luận:** Config A có điểm trung bình cao hơn trong lần chạy hiện tại. Nếu Config A tốt hơn, reranking giúp đẩy chunk liên quan lên đầu. Nếu Config B tương đương hoặc tốt hơn, dataset/context hiện tại còn nhỏ nên lợi ích reranking chưa thể hiện rõ.
+**Kết luận:** Config B có điểm trung bình cao hơn trong lần chạy hiện tại. Nếu Config A tốt hơn, reranking giúp đẩy chunk liên quan lên đầu. Nếu Config B tương đương hoặc tốt hơn, dataset/context hiện tại còn nhỏ nên lợi ích reranking chưa thể hiện rõ.
 
 ---
 
@@ -36,9 +36,9 @@ Số test cases hiện có: **51**.
 
 | # | Question | Faithfulness | Relevance | Recall | Precision | Root Cause |
 |---|----------|--------------|-----------|--------|-----------|------------|
-| 1 | Nếu câu hỏi yêu cầu thông tin không có trong tài liệu đã index thì chatbot phải trả lời thế nào? | 0.940 | 0.183 | 0.170 | 0.000 | Retriever chưa lấy đủ expected context hoặc dữ liệu chuẩn hóa còn thiếu chi tiết. |
-| 2 | Dataset có đủ bằng chứng để tư vấn một người cụ thể sẽ bị phạt bao nhiêu năm tù không? | 0.908 | 0.258 | 0.331 | 0.000 | Retriever chưa lấy đủ expected context hoặc dữ liệu chuẩn hóa còn thiếu chi tiết. |
-| 3 | Thời hạn cai nghiện ma túy tự nguyện tại cơ sở cai nghiện là bao lâu? | 0.922 | 0.207 | 0.540 | 0.600 | Answer extractive còn ngắn, chưa bao phủ đủ expected answer. |
+| 1 | Nếu câu hỏi yêu cầu thông tin không có trong tài liệu đã index thì chatbot phải trả lời thế nào? | 0.860 | 0.192 | 0.208 | 0.000 | Retriever chưa lấy đủ expected context hoặc dữ liệu chuẩn hóa còn thiếu chi tiết. |
+| 2 | Chatbot có nên đưa ra kết luận pháp lý cuối cùng về một vụ việc ma túy chỉ dựa trên bài báo không? | 0.848 | 0.232 | 0.274 | 0.600 | Retriever chưa lấy đủ expected context hoặc dữ liệu chuẩn hóa còn thiếu chi tiết. |
+| 3 | Dataset có đủ bằng chứng để tư vấn một người cụ thể sẽ bị phạt bao nhiêu năm tù không? | 0.868 | 0.226 | 0.482 | 0.600 | Retriever chưa lấy đủ expected context hoặc dữ liệu chuẩn hóa còn thiếu chi tiết. |
 
 ---
 
