@@ -1,0 +1,1 @@
+"""Group project source package."""
