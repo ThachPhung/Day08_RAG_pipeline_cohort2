@@ -1,0 +1,12 @@
+# Diễn viên Hữu Tín bị khởi tố vì tổ chức sử dụng ma túy
+
+**Source:** https://vnexpress.net/dien-vien-huu-tin-bi-khoi-to-vi-to-chuc-su-dung-ma-tuy-4477380.html
+**Crawled:** 2026-06-08T14:30:24.602289
+
+---
+
+# Diễn viên Hữu Tín bị khởi tố vì tổ chức sử dụng ma túy
+**Source:** https://vnexpress.net/dien-vien-huu-tin-bi-khoi-to-vi-to-chuc-su-dung-ma-tuy-4477380.html
+**Crawled:** 2022-06-17
+
+Ngày 17/6/2022, Công an quận 8, TP HCM đã khởi tố bị can, bắt tạm giam diễn viên hài Trần Hữu Tín (35 tuổi) về tội 'Tổ chức sử dụng trái phép chất ma túy'. Trước đó, công an kiểm tra căn hộ chung cư ở phường 5, quận 8, phát hiện Hữu Tín cùng một số người đang sử dụng ma túy dạng khay và thuốc lắc. Hữu Tín thừa nhận đã mua ma túy về để tiếp khách và sử dụng cùng bạn bè sau khi đi bar.
