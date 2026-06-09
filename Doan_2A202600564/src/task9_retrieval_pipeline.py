@@ -92,10 +92,13 @@ def retrieve(
 if __name__ == "__main__":
     test_queries = [
         "Hình phạt cho tội tàng trữ trái phép chất ma tuý",
-        "Nghệ sĩ nào bị bắt vì sử dụng ma tuý",
+        "Nghệ sĩ nào bị bắt vì sử dụng ma tuý năm 2024",
         "Luật phòng chống ma tuý 2021 quy định gì về cai nghiện",
     ]
+
     for q in test_queries:
         print(f"\nQuery: {q}")
-        for i, r in enumerate(retrieve(q, top_k=3), 1):
+        print("-" * 60)
+        results = retrieve(q, top_k=3)
+        for i, r in enumerate(results, 1):
             print(f"  {i}. [{r['score']:.3f}] [{r['source']}] {r['content'][:80]}...")
