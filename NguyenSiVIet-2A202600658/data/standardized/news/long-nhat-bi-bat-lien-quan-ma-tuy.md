@@ -1,0 +1,8 @@
+# Ca sĩ Long Nhật bị bắt: Sự nghiệp 30 năm và đời tư đầy thị phi
+
+**Source:** https://amp.vtcnews.vn/ca-si-long-nhat-bi-bat-su-nghiep-30-nam-va-doi-tu-day-thi-phi-ar1019084.html
+**Publisher:** VTC News
+**Crawled:** 2026-06-08T08:02:35.323697+00:00
+
+---
+Bài báo nhìn lại sự nghiệp của ca sĩ Long Nhật trong bối cảnh ông bị khởi tố, bắt tạm giam để điều tra hành vi liên quan đến tổ chức sử dụng trái phép chất ma túy. Nội dung nhấn mạnh việc nghệ sĩ nổi tiếng vẫn có thể đối mặt hậu quả pháp lý nghiêm trọng khi dính đến chất cấm.
